@@ -4,7 +4,9 @@
     <div class = "container" >
         <h3 class = "brand" >WeatherWit</h3>
         <div>
-            <h1 class = "temp" >16&#176;</h1>
+             <span class ="units"> <a href = "#" id = "celcius">C </a> <h2> | </h2>
+                <a href = "#" id = "farenheit">F</a> </span> 
+            <h1 class = "temp" >    </h1> 
             <div class = "city-time" > 
                 <h1 class = "name" >Oslo</h1>
                 <small>
@@ -16,11 +18,17 @@
                 </small>
             </div>
             <div class = "weather" >
-                <span class = "emoji">☀️</span>
+                <img
+                src = "icons/01d@2x.png"
+                class = "emoji"
+                alt = "emoji"
+                width = "50"
+                height = "50"
+                />
+
                 <span class = "condition" > Sunny </span>
-                
+                </div>
             </div>
-        </div>
     </div>
     <div class = "panel" > 
         <form id= "locationInput" > 
@@ -45,10 +53,6 @@
 
         <ul class = "details" >
             <h4>Weather data</h4>
-            <li>
-<span> Cloudy </span>
-<span class = "cloud" > 89% </span>
-</li>
 <li>
     <span>Humidity</span> 
     <span class = "humidity"> 64% </span>
@@ -58,5 +62,11 @@
         <span>Wind</span>
         <span class = "wind" > 8km/h </span>
     </li>
+
+     <li>
+        <span>Coordinates (Lat, Long)</span>
+        <span class = "coord" > </span>
+    </li>
         </ul>
     </div>
+<script src="src/main.js"> </script>
