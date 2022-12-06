@@ -15,10 +15,25 @@ a{
     color:white;
     text-decoration: none;
     font-size: larger;
-}
-a:hover{
     text-decoration: underline;
-    color: #ccc;
+}
+
+a:focus{
+    color: black;
+    text-decoration: none;
+    cursor:default; 
+} 
+
+a:hover{
+    color:#ccc;
+}
+
+a:focus:hover{
+    color: black !important;
+} 
+
+.headerText{
+    color:#2B2B23 ;
 }
 
 

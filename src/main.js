@@ -22,6 +22,8 @@ let apiKey = "a72eacb9d82e854fa98860dc2139989e";
 //Default city when the page loads
 let cityInput = "Oslo";
 
+
+
 fetchWeatherData();
 
 //Add click event to each city in the panel
@@ -71,7 +73,8 @@ e.preventDefault();
 
     // Function that fetches and displays data from the weather API
 
-    function fetchWeatherData(){
+    function fetchWeatherData(units){
+
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&appid=${apiKey}&units=metric`)
         //Take the data (in JSON format and convert it into regular JS objects
         .then(response => response.json())
@@ -110,9 +113,8 @@ e.preventDefault();
         function showFahrenheitTemp(event){
             event.preventDefault();
             // fetchWeatherData()
-            let ceciusTemp = temperatureElem;
-            let farenheit = (ceciusTemp * 9) /5 + 32 ;
-            let tempElement = document.querySelector(".temp");
+            const farenheit = (temperatureElem * 9) /5 + 32 ;
+            const tempElement = document.querySelector(".temp");
             tempElement.innerHTML = Math.round(farenheit) + "&#176" ;
         }
 
@@ -120,16 +122,16 @@ e.preventDefault();
 
     function showCelcius(event) {
         event.preventDefault();
-         let tempElement = document.querySelector(".temp");
+         const tempElement = document.querySelector(".temp");
          tempElement.innerHTML = Math.round(temperatureElem) + "&#176" ;
 
     }
         //Convert C to F and vise versa
 
-        let farenheitLink = document.querySelector("#farenheit");
+        const farenheitLink = document.querySelector("#farenheit");
         farenheitLink.addEventListener("click", showFahrenheitTemp);
 
-        let celciusLink = document.querySelector("#celcius");
+        const celciusLink = document.querySelector("#celcius");
         celciusLink.addEventListener("click", showCelcius);
 
 
