@@ -22,6 +22,71 @@ let apiKey = "a72eacb9d82e854fa98860dc2139989e";
 //Default city when the page loads
 let cityInput = "Oslo";
 
+let currentTime = new Date();
+
+//Function get date with formatting Current-time
+function time(timeFormat) {
+    let hours = currentTime.getHours();;
+    let minutes = currentTime.getMinutes();
+    if(minutes < 10 ) {
+    minutes = `0${minutes}`
+} 
+    if (hours >= 12){
+    timeFormat  = `${hours}:${minutes} PM`;
+} else {
+    timeFormat = `${hours}:${minutes} AM`;
+}
+
+return timeFormat
+}
+//Selecting h2, and adding time Method
+timeOutput.innerHTML = time();
+
+//Day formatting in array
+let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+]
+
+//Month formatting in array
+let months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+];
+
+//Function get date with formatting : "Day, month, date, year"
+// Returing variable with formatting that can be re-used
+function todaysDate(){
+    let day = days[currentTime.getDay()];
+    let month = months[currentTime.getMonth()];
+    let date = currentTime.getDate();
+    let year = currentTime.getFullYear();
+    
+    let dateFormat = `${day} 
+    ${ month} ${ date }. ${ year}`;
+
+    return dateFormat;
+}
+
+//Selecting h2, and adding todaysDate Method
+let h2 = document.querySelector(" .date");
+h2.innerHTML = todaysDate();
+
 
 
 fetchWeatherData();
@@ -56,20 +121,6 @@ e.preventDefault();
         
     });
 
-    /*Function that returns day of the week from a date */
-
-    function weekdays(day, month, year) {
-        const weekday = [
-            "Sunday",
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday"
-    ];
-    return weekday[new Date (`${day}/${month}/${year}`).getDay()];
-    };
 
     // Function that fetches and displays data from the weather API
 

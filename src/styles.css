@@ -15,7 +15,6 @@ a{
     color:white;
     text-decoration: none;
     font-size: larger;
-    text-decoration: underline;
 }
 
 a:focus{
@@ -24,13 +23,13 @@ a:focus{
     cursor:default; 
 } 
 
-a:hover{
+ a:hover{
     color:#ccc;
 }
 
 a:focus:hover{
     color: black !important;
-} 
+}  
 
 .headerText{
     color:#2B2B23 ;
@@ -103,8 +102,8 @@ a:focus:hover{
     margin: 0.5em 0;
 }
  .units {
-    display:block;
-   margin: 0 1em;
+display:block;
+margin: 0 1em;
 } 
 
 
