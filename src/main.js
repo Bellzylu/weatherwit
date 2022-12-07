@@ -15,9 +15,13 @@ const search = document.querySelector('.search');
 const btn = document.querySelector('.submit');
 const cities = document.querySelectorAll('.city');
 const coord = document.querySelector('.coord');
+const forecastDays = document.querySelector('.day');
+const dayOneIcon = document.getElementById("img1");
 
 //Weather API key
-let apiKey = "a72eacb9d82e854fa98860dc2139989e";
+// const apiKey = "a72eacb9d82e854fa98860dc2139989e";
+const apiKey = "3a0e32a4t10o5e35a68e4f4ea9b75f8d";
+// const keyForecast = "9cb72bec958f8fb02391985ed7b219d2";
 
 //Default city when the page loads
 let cityInput = "Oslo";
@@ -76,12 +80,20 @@ function todaysDate(){
     let month = months[currentTime.getMonth()];
     let date = currentTime.getDate();
     let year = currentTime.getFullYear();
-    
     let dateFormat = `${day} 
     ${ month} ${ date }. ${ year}`;
 
     return dateFormat;
 }
+
+function formatDay(timestamp) {
+    let date = new Date(timestamp + 1000);
+    let day = date.getDay();
+    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    return days[day];
+}
+
 
 //Selecting h2, and adding todaysDate Method
 let h2 = document.querySelector(" .date");
@@ -122,42 +134,90 @@ e.preventDefault();
     });
 
 
+    function getForecast(coordinates){
+        console.log(coordinates);
+        fetch(`https://api.shecodes.io/weather/v1/forecast?query=${cityInput}&key=${apiKey}`)
+.then(response => response.json())
+        .then(data => {
+            console.log(data);
+for (i=0;i<6;i++){
+            document.getElementById("day" + (i+1) + "Min").innerHTML = "Min: "
+            +Number(data.daily[i].temperature.minimum).toFixed(1)+"°";
+            console.log(data);
+} for (i=0;i<6;i++){
+            document.getElementById("day" + (i+1) + "Max").innerHTML = "Max: "
+            +Number(data.daily[i].temperature.maximum).toFixed(1)+"°";
+            console.log(data);
+}
+            for (i=0;i<6;i++){
+            document.getElementById("img" + (i+1)).src =
+             "http://shecodes-assets.s3.amazonaws.com/api/weather/icons/" 
+             + data.daily[i].condition.icon + ".png";
+          
+}
+        }); 
+    
+        const d = new Date();
+        const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+        function checkDay(day){
+            if(day +d.getDay()>6) {
+                return day +d.getDay()-7;
+            }
+    
+            else {
+                return day +d.getDay();
+             }
+            
+        }
+        for(i=0;i<7;i++){
+            document.getElementById("day"+(i+1)).innerHTML = weekday[checkDay(i)];
+        }
+
+    }
+
+
+
+
     // Function that fetches and displays data from the weather API
 
-    function fetchWeatherData(units){
-
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&appid=${apiKey}&units=metric`)
-        //Take the data (in JSON format and convert it into regular JS objects
+    function fetchWeatherData(){
+fetch(`https://api.shecodes.io/weather/v1/current?query=${cityInput}&key=${apiKey}`)
         .then(response => response.json())
         .then(data => {
             //console log data to see avaliable variables
             console.log(data);
-
+    
              //Create tempElem that holds the temp in celcius to use later
-            temperatureElem = data.main.temp;
+            temperatureElem = data.temperature.current;
 
             //Adding temperature and weather condition to page
             temp.innerHTML = Math.round(temperatureElem) + "&#176";
-            nameOutput.innerHTML = data.name;
-            conditionOutput.innerHTML = data.weather[0].description;
+            nameOutput.innerHTML = data.city;
+            conditionOutput.innerHTML = data.condition.description;
             
             //Get correct iconId
-            const iconId = data.weather[0].icon;
+            const iconId = data.condition.icon;
             //URL from API without details
-            let iconURL = "http://openweathermap.org/img/wn/";
+            let iconURL = "http://shecodes-assets.s3.amazonaws.com/api/weather/icons/";
             //Create path with correct info
-            let iconPath = iconURL + iconId + "@2x.png";
+            let iconPath = iconURL + iconId + ".png";
             //Add emoji to emoji img in html
             emoji.src = iconPath;
+            dayOneIcon.src = iconPath;
+
+
 
 
             //Get the humidity from API and change html attribute to correct data
-            humidity.innerHTML = data.main.humidity + "%";
+            humidity.innerHTML = data.temperature.humidity + "%";
             windOutput.innerHTML = Math.round(data.wind.speed) + " km/h";
-            coord.innerHTML = data.coord.lat + ", " + data.coord.lon;
+            coord.innerHTML = data.coordinates.latitude + ", " + data.coordinates.longitude;
 
-            
-        
+
+            getForecast(data.coord)
+
+
         }); }
 
 
@@ -169,12 +229,12 @@ e.preventDefault();
             tempElement.innerHTML = Math.round(farenheit) + "&#176" ;
         }
 
-      let temperatureElem = null;
+    let temperatureElem = null;
 
     function showCelcius(event) {
         event.preventDefault();
-         const tempElement = document.querySelector(".temp");
-         tempElement.innerHTML = Math.round(temperatureElem) + "&#176" ;
+    const tempElement = document.querySelector(".temp");
+        tempElement.innerHTML = Math.round(temperatureElem) + "&#176" ;
 
     }
         //Convert C to F and vise versa

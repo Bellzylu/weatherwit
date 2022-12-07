@@ -114,7 +114,7 @@ margin: 0 1em;
 
 .panel {
     position: absolute;
-    width: 40%; 
+    width: 48%; 
     height: 100%;
     top: 0;
     right: 0;
@@ -172,13 +172,13 @@ color: #000;
 .panel ul {
     padding: 0 0 1em 0;
     margin: 2em 0;
-    border-bottom: 1px #ccc solid;
+    
 }
 
 .panel ul li {
     padding: 0 0 1em 0;
     margin: 2em 0;
-    border-bottom: 1px #ccc solid;
+
 }
 
 .panel ul li {
@@ -190,12 +190,12 @@ color: #000;
     margin: 3em 0;
 }
 
-.city {
+.day {
     display: block;
     cursor: pointer;
 }
 
-.city:hover {
+.day:hover {
     color: #fff;
 }
 
@@ -204,6 +204,44 @@ color: #000;
     justify-content: space-between;
     align-items: center;
 }
+
+
+#iconsContainer{
+    display: flex;
+    padding: 0 0 1em 0;
+    margin: 0;
+    float: left;
+
+}
+
+.image{
+    display: block;
+    justify-content: space-between;
+    margin-right: 1.4em;
+}
+
+.weather{
+    display: inline;
+    margin-right: 1.5em;
+    margin-left: 1.5em;
+}
+
+.minValues, .maxValues{
+    display: inline;
+    margin-right: 1.5em;
+    margin-left: 1.5em;
+    color:#ccc;
+    padding: 1em;
+}
+
+.minValues{
+    color:rgb(32, 32, 167);
+}
+
+
+.maxValues{
+    color:rgb(39, 29, 12);
+} 
 
 @media screen and (max-width: 800px) {
     .panel, .container {
