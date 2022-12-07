@@ -23,7 +23,7 @@ a:focus{
     cursor:default; 
 } 
 
- a:hover{
+a:hover{
     color:#ccc;
 }
 
@@ -101,7 +101,7 @@ a:focus:hover{
     display: block;
     margin: 0.5em 0;
 }
- .units {
+.units {
 display:block;
 margin: 0 1em;
 } 

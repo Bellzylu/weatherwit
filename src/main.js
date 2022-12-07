@@ -18,10 +18,9 @@ const coord = document.querySelector('.coord');
 const forecastDays = document.querySelector('.day');
 const dayOneIcon = document.getElementById("img1");
 
-//Weather API key
-// const apiKey = "a72eacb9d82e854fa98860dc2139989e";
+//Weather API key from SheCodes
 const apiKey = "3a0e32a4t10o5e35a68e4f4ea9b75f8d";
-// const keyForecast = "9cb72bec958f8fb02391985ed7b219d2";
+
 
 //Default city when the page loads
 let cityInput = "Oslo";
@@ -86,22 +85,12 @@ function todaysDate(){
     return dateFormat;
 }
 
-function formatDay(timestamp) {
-    let date = new Date(timestamp + 1000);
-    let day = date.getDay();
-    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-    return days[day];
-}
-
 
 //Selecting h2, and adding todaysDate Method
 let h2 = document.querySelector(" .date");
 h2.innerHTML = todaysDate();
 
-
-
-fetchWeatherData();
+ fetchWeatherData();
 
 //Add click event to each city in the panel
 cities.forEach((city) => {
@@ -133,7 +122,7 @@ e.preventDefault();
         
     });
 
-
+//Function that get forecast data from API and update HTML elements with live data
     function getForecast(coordinates){
         console.log(coordinates);
         fetch(`https://api.shecodes.io/weather/v1/forecast?query=${cityInput}&key=${apiKey}`)
@@ -151,15 +140,18 @@ for (i=0;i<6;i++){
 }
             for (i=0;i<6;i++){
             document.getElementById("img" + (i+1)).src =
-             "http://shecodes-assets.s3.amazonaws.com/api/weather/icons/" 
-             + data.daily[i].condition.icon + ".png";
-          
+            "http://shecodes-assets.s3.amazonaws.com/api/weather/icons/" 
+            + data.daily[i].condition.icon + ".png";
+    
 }
         }); 
     
-        const d = new Date();
-        const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+        //Create const for new Date method
+        const d = new Date();
+        //Format days for forcast days
+        const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+//Function that check the current day, and returns data for today +1 for each day of the week
         function checkDay(day){
             if(day +d.getDay()>6) {
                 return day +d.getDay()-7;
@@ -167,7 +159,7 @@ for (i=0;i<6;i++){
     
             else {
                 return day +d.getDay();
-             }
+}
             
         }
         for(i=0;i<7;i++){
@@ -176,11 +168,8 @@ for (i=0;i<6;i++){
 
     }
 
-
-
-
     // Function that fetches and displays data from the weather API
-
+    //It gets city from input value with temperature, condition and icon
     function fetchWeatherData(){
 fetch(`https://api.shecodes.io/weather/v1/current?query=${cityInput}&key=${apiKey}`)
         .then(response => response.json())
@@ -215,12 +204,12 @@ fetch(`https://api.shecodes.io/weather/v1/current?query=${cityInput}&key=${apiKe
             coord.innerHTML = data.coordinates.latitude + ", " + data.coordinates.longitude;
 
 
-            getForecast(data.coord)
+            getForecast(data.coordinates)
 
 
         }); }
 
-
+//Function that calculates the F temp based on the C temp from the API
         function showFahrenheitTemp(event){
             event.preventDefault();
             // fetchWeatherData()
@@ -231,13 +220,14 @@ fetch(`https://api.shecodes.io/weather/v1/current?query=${cityInput}&key=${apiKe
 
     let temperatureElem = null;
 
+    //Function wich rounds celcius number-used for the current temp attribute
     function showCelcius(event) {
         event.preventDefault();
     const tempElement = document.querySelector(".temp");
         tempElement.innerHTML = Math.round(temperatureElem) + "&#176" ;
 
     }
-        //Convert C to F and vise versa
+        //Convert C to F and vise versa on click
 
         const farenheitLink = document.querySelector("#farenheit");
         farenheitLink.addEventListener("click", showFahrenheitTemp);
